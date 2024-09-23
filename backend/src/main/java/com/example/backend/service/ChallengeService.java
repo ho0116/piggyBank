@@ -37,7 +37,7 @@ public class ChallengeService {
         Challenge challenge = new Challenge();
         challenge.setChallengeName(challengeDto.getChallengeName());
         challenge.setChallengeDescription(challengeDto.getChallengeDescription());
-        challenge.setChallengeStatus(challengeDto.getChallengeStatus());
+        challenge.setChallengeStatus("In Progress");
         challenge.setStartDate(challengeDto.getStartDate());
         challenge.setEndDate(challengeDto.getEndDate());
         challenge.setSavingCycle(challengeDto.getSavingCycle());
@@ -78,7 +78,7 @@ public class ChallengeService {
             updatedChallenge.setEndDate(challengeDto.getEndDate());
             updatedChallenge.setSavingCycle(challengeDto.getSavingCycle());
             updatedChallenge.setTargetAmount(challengeDto.getTargetAmount());
-            updatedChallenge.setSavedAmount(challengeDto.getSavedAmount());
+//            updatedChallenge.setSavedAmount(challengeDto.getSavedAmount());
 
             return challengeRepository.save(updatedChallenge);
         } else {
