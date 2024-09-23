@@ -1,11 +1,12 @@
+"use client";
 import { FormEvent, useState } from "react";
-import { Users } from "../../types";
+import { Users } from "../types";
 import { useMutation } from "@tanstack/react-query";
-import { join, login } from "../../api";
-import { useRouter } from "next/router"; // Next.js의 useRouter
-import useAuth from "../../hooks/useAuth";
+import { login } from "../api/api";
+import useAuth from "../hooks/useAuth";
+import { useRouter } from "next/navigation";
 
-export default function LoginForm({ isJoin = false }: { isJoin?: boolean }) {
+export default function LoginForm() {
   const [users, setUsers] = useState<Users>({
     username: "",
     password: "",
@@ -13,17 +14,6 @@ export default function LoginForm({ isJoin = false }: { isJoin?: boolean }) {
   });
   const router = useRouter();
   const { setUser } = useAuth();
-
-  const joinMutation = useMutation({
-    mutationFn: join,
-    onSuccess: () => {
-      alert("가입 성공!");
-      router.push("/login");
-    },
-    onError: () => {
-      alert("가입 실패!");
-    },
-  });
 
   const loginMutation = useMutation({
     mutationFn: login,
@@ -39,29 +29,23 @@ export default function LoginForm({ isJoin = false }: { isJoin?: boolean }) {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isJoin) {
-      joinMutation.mutate(users);
-      return;
-    }
     loginMutation.mutate(users);
   };
 
   return (
     <div className="max-w-lg mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">{isJoin ? "가입" : "로그인"}</h1>
+      <h1 className="text-3xl font-bold mb-6">로그인</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="username" className="block text-sm font-medium">
-            유저이름
+          <label htmlFor="email" className="block text-sm font-medium">
+            이메일
           </label>
           <input
-            id="username"
+            id="email"
             type="text"
-            name="username"
-            value={users.username}
-            onChange={(e) =>
-              setUsers({ ...users, username: e.target.value })
-            }
+            name="email"
+            value={users.email}
+            onChange={(e) => setUsers({ ...users, email: e.target.value })}
             required
             className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -75,9 +59,7 @@ export default function LoginForm({ isJoin = false }: { isJoin?: boolean }) {
             type="password"
             name="password"
             value={users.password}
-            onChange={(e) =>
-              setUsers({ ...users, password: e.target.value })
-            }
+            onChange={(e) => setUsers({ ...users, password: e.target.value })}
             required
             className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -86,7 +68,7 @@ export default function LoginForm({ isJoin = false }: { isJoin?: boolean }) {
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
         >
-          {isJoin ? "가입" : "로그인"}
+          로그인
         </button>
       </form>
     </div>

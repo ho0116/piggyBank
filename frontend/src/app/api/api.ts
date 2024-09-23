@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Users } from "./types";
+import { Users } from "../types";
 
 const piggyApi = axios.create({
   baseURL: process.env.API_URL,
