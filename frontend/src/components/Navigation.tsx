@@ -1,15 +1,17 @@
 "use client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Navigation() {
-  const router = useRouter();
 
   return (
     <nav>
-      <div>
-        <button onClick={() => router.push("/")}>홈</button>
-        <button onClick={() => router.push("/login")}>로그인</button>
-        <button onClick={() => router.push("/user")}>가입</button>
+      <div id="nav_div">
+        <Link href="/">
+          <button>홈</button>
+        </Link>
+        <Link href="/myPage">
+          <button>마이페이지</button>
+        </Link>
       </div>
     </nav>
   );

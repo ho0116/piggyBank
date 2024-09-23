@@ -5,6 +5,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Providers from "@/components/Providers";  // 클라이언트 컴포넌트 가져오기
 
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -39,8 +40,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div id="app-container">
+          <Providers>{children}</Providers>
           <Navigation />
-          <Providers>{children}</Providers>  {/* Providers로 children 감싸기 */}
         </div>
       </body>
     </html>

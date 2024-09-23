@@ -1,8 +1,9 @@
 :root {
-  --background: #ffffff;
+  --background: linear-gradient(130deg, rgba(221,255,253,1) 1%, rgba(255,255,255,1) 50%, rgba(237,219,255,1) 100%);
   --foreground: #171717;
   --app-width: 400px; /* 고정된 앱 너비 */
-  --app-height: 800px; /* 고정된 앱 높이 */
+  --app-height: 100vh; /* 유동적으로 설정된 앱 높이 (화면 높이 기준) */
+  --min-app-height: 600px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,11 +26,54 @@ body {
   overflow: hidden; /* 전체 페이지에서는 스크롤 방지 */
 }
 
+
 #app-container {
   width: var(--app-width); /* 고정된 앱 크기 */
   height: var(--app-height);
   background-color: var(--background);
   display: flex;
   flex-direction: column;
-  overflow: auto; /* 앱 화면 내에서는 스크롤 가능 */
+  position: relative;
+  overflow: hidden; /* 앱 화면 내에서는 스크롤 방지 */
+}
+
+nav {
+  position: absolute; /* 절대 위치 */
+  bottom: 0; /* 화면 하단에 고정 */
+  width: 100%; /* 네비게이션이 전체 너비를 차지 */
+  height: 80px; /* 고정된 높이 */
+  display: flex;
+  justify-content: space-between; /* 버튼을 양쪽에 나란히 배치 */
+  background-color: #f8f9fa; /* 배경색 */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* 상단에 그림자 */
+  padding: 0;
+}
+
+nav div {
+  display: flex;
+  flex-direction: row; /* 버튼을 가로로 정렬 */
+  width: 100%; /* 부모 요소의 전체 너비를 차지 */
+  height: 100%; /* 부모의 높이를 채우도록 설정 */
+  justify-content: space-evenly;
+}
+
+nav button {
+  width: 100%;
+  margin: 0; /* 버튼 사이 여백 제거 */
+  padding: 0; /* 버튼 내부 여백 제거 */
+  background-color: rgba(0, 123, 255, 0.2); /* 50% 투명도의 파란색 배경 */
+  color: white;
+  border: none;
+  border-radius: 0; /* 버튼의 모서리를 둥글게 하지 않음 */
+  cursor: pointer;
+  text-align: center; /* 텍스트를 중앙 정렬 */
+  height: 100%; /* 버튼이 네비게이션의 전체 높이를 차지 */
+}
+
+nav button:first-child {
+  margin-right: 5px; /* 첫 번째 버튼 오른쪽에 여백 */
+}
+
+nav button:hover {
+  background-color: #0056b3;
 }
