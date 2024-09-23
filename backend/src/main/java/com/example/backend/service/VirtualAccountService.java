@@ -16,8 +16,5 @@ public class VirtualAccountService {
         return virtualAccountRepository.findAll();
     }
 
-    public void deleteVirtualAccountById(Long id){
-        virtualAccountRepository.deleteById(id);
-    }
 
 }
