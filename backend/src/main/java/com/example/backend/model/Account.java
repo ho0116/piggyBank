@@ -20,7 +20,7 @@ public class Account {
     @Column(name = "bank_name", length = 50)
     private String bankName;
 
-    @Column(name = "account_number", length = 100)
+    @Column(name = "account_number", length = 100, unique = true)
     private String accountNumber;
 
     @Column(name = "account_holder", length = 50)

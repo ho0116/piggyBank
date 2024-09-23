@@ -41,4 +41,7 @@ public class Challenge {
 
     @Column(name = "challenge_status", length = 50)
     private String challengeStatus;
+
+    @OneToOne(mappedBy = "challenge", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private VirtualAccount virtualAccount;
 }

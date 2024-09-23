@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping
-    public User getUser(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable Long id) {
         return userService.getUser(id);
     }
 
@@ -21,5 +21,13 @@ public class UserController {
         return userService.createUser(user);
     }
 
+    @PutMapping
+    public User updateUser(@RequestBody User user) {
+        return userService.updateUser(user);
+    }
 
+    @DeleteMapping
+    public void deleteUser(@RequestParam Long id) {
+        userService.deleteUser(id);
+    }
 }

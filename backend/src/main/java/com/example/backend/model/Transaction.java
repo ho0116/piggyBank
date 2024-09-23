@@ -15,10 +15,6 @@ public class Transaction {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
-    private Account account;
-
-    @ManyToOne
     @JoinColumn(name = "virtual_account_id", referencedColumnName = "id")
     private VirtualAccount virtualAccount;
 

@@ -1,6 +1,7 @@
 package com.example.backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,10 +16,11 @@ public class VirtualAccount {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "challenge_id", referencedColumnName = "id")
+    @JoinColumn(name = "challenge_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private Challenge challenge;
 
-    @Column(name = "account_number", length = 100)
+    @Column(name = "account_number", length = 100, unique = true, nullable = false)
     private String accountNumber;
 
     @Column(name = "balance")
