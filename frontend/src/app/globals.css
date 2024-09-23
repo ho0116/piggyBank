@@ -1,10 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --app-width: 400px; /* 고정된 앱 너비 */
+  --app-height: 800px; /* 고정된 앱 높이 */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,10 +16,20 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* 화면 중앙 배치 */
+  align-items: center;
+  height: 100vh;
+  overflow: hidden; /* 전체 페이지에서는 스크롤 방지 */
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+#app-container {
+  width: var(--app-width); /* 고정된 앱 크기 */
+  height: var(--app-height);
+  background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  overflow: auto; /* 앱 화면 내에서는 스크롤 가능 */
 }
