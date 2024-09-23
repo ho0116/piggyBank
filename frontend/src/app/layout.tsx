@@ -1,8 +1,9 @@
+// app/layout.tsx (서버 컴포넌트)
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { AuthProvider } from "@/context/AuthContext";
 import Navigation from "@/components/Navigation";
+import Providers from "@/components/Providers";  // 클라이언트 컴포넌트 가져오기
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,7 +40,7 @@ export default function RootLayout({
       >
         <div id="app-container">
           <Navigation />
-          <AuthProvider>{children}</AuthProvider>
+          <Providers>{children}</Providers>  {/* Providers로 children 감싸기 */}
         </div>
       </body>
     </html>
