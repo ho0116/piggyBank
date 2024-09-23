@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/challenge")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:3000")
 public class ChallengeController {
     private final ChallengeService challengeService;
 

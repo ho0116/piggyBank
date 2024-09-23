@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @RestController
 @RequestMapping("/transaction")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:3000")
 public class TransactionController {
     private final TransactionService transactionService;
 
