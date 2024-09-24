@@ -1,13 +1,13 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { Users } from "../types";
+import { User } from "../types";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../api/api";
 import useAuth from "../hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
-  const [users, setUsers] = useState<Users>({
+  const [users, setUsers] = useState<User>({
     username: "",
     password: "",
     email: "",

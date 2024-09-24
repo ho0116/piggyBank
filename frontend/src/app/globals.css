@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --background: linear-gradient(130deg, rgba(221,255,253,1) 1%, rgba(255,255,255,1) 50%, rgba(237,219,255,1) 100%);
   --foreground: #171717;
