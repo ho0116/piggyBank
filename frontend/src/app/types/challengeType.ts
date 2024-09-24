@@ -1,4 +1,4 @@
-export default interface challenge{
+export default interface Challenge{
     id?: number,
     userId: number,
     accountId:number,
