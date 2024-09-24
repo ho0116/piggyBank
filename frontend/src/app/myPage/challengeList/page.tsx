@@ -3,22 +3,27 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllChallenges } from "@/app/api/challengeApi";
 import challenge from "@/app/types/challengeType";
+import useAuth from "@/app/hooks/useAuth";
 
 export default function ChallengeList(){
 
     // const [list, setList] = useState([]);
+    const {user} = useAuth();
     
     const {data:challengeList, isLoading, isError} = useQuery({
         queryKey:["challengeList"],
-        queryFn: getAllChallenges
+        queryFn: ()=> getAllChallenges(user?.id as number),
+        enabled: !!user?.id,
     })
+
+    console.log(user?.id, challengeList)
 
     return (
         <div>
             <p className="font-bold text-2xl text-center pt-5 text-cyan-500">챌린지 리스트</p>
             {isLoading && <div>Loading</div>}
             {isError && <div>Error</div>}
-            {challengeList && 
+            {!isError && challengeList && 
         
             <ul className="max-h-[80%] overflow-y-scroll list-none mt-4 flex flex-col items-center">
             {challengeList.map((c: challenge) => (
