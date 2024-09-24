@@ -5,9 +5,10 @@ import useAuth from "../../hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { User } from "../../types/userTypes";
 import { login } from "../../api/authApi";
+import Link from "next/link";
 
 export default function LoginForm() {
-  const [users, setUsers] = useState<User>({
+  const [users, setUsers] = useState({
     password: "",
     email: "",
   });
@@ -15,11 +16,14 @@ export default function LoginForm() {
   const router = useRouter();
   const { setUser } = useAuth();
 
+  // 서버로부터 User 객체 그대로 받아와 처리
   const loginMutation = useMutation({
     mutationFn: login,
-    onSuccess: () => {
+    onSuccess: (data: User) => {
       alert("로그인 성공!");
-      setUser(users);
+      // 서버로부터 받은 User 객체를 상태로 설정 (id 포함)
+      setUser(data);
+      console.log(data)
       router.push("/");
     },
     onError: () => {
@@ -73,12 +77,7 @@ export default function LoginForm() {
           </button>
         </div>
         <div className="mb-4">
-          <button
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
-            onClick={() => router.push("/user/join")}
-          >
-            회원가입
-          </button>
+          <Link href={"/user/join"}>회원가입</Link>
         </div>
       </form>
     </div>
