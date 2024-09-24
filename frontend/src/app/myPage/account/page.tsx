@@ -1,9 +1,9 @@
 "use client"
 
-import { createAccount } from "@/app/api/accountApi";
+import { createAccount, getMyAccount } from "@/app/api/accountApi";
 import useAuth from "@/app/hooks/useAuth";
 import MyAccount from "@/app/types/accountType";
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react"
 
@@ -31,6 +31,13 @@ export default function Account(){
         }
       }, [user, router]);
 
+    const {data:accountList, isLoading, isError} = useQuery({
+        queryKey:["accountList"],
+        queryFn: () => getMyAccount(user?.id as number),
+        enabled: !!user?.id,
+        refetchOnMount: true,
+    })
+
     const createMutate = useMutation({
         mutationFn:createAccount,
         onSuccess: () => {
@@ -55,27 +62,44 @@ export default function Account(){
         }));
     };
 
-    return(<div className="flex justify-center">
-        <div className="w-11/12 h-72 bg-white overflow-y-scroll list-none mt-4 flex flex-col rounded-md p-3">
+
+
+    return(<div className="flex flex-col justify-center items-center">
+        <div className="w-11/12 h-[360px] bg-white overflow-y-scroll list-none mt-4 flex flex-col rounded-md p-3">
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col">
                     <label>은행명</label>
-                    <input id="bankName" name="bankName" value={account.bankName} onChange={handleInputChange}></input>
+                    <input id="bankName" name="bankName" value={account.bankName} onChange={handleInputChange} className="border border-gray-200 rounded-md p-2 mb-2"></input>
                 </div>
                 <div className="flex flex-col">
                     <label>계좌번호</label>
-                    <input id="accountNumber" name="accountNumber" value={account.accountNumber} onChange={handleInputChange}></input>
+                    <input id="accountNumber" name="accountNumber" value={account.accountNumber} onChange={handleInputChange} className="border border-gray-200 rounded-md p-2 mb-2"></input>
                 </div>
                 <div className="flex flex-col">
                     <label>예금주</label>
-                    <input id="accountHolder" name="accountHolder" value={account.accountHolder} onChange={handleInputChange}></input>
+                    <input id="accountHolder" name="accountHolder" value={account.accountHolder} onChange={handleInputChange}className="border border-gray-200 rounded-md p-2 mb-2" ></input>
                 </div>
                 <div className="flex flex-col">
                     <label>잔액</label>
-                    <input type="number" id="balance" name="balance" value={account.balance} onChange={handleInputChange}></input>
+                    <input type="number" id="balance" name="balance" value={account.balance} onChange={handleInputChange} className="border border-gray-200 rounded-md p-2 mb-2"></input>
                 </div>
-                <button className="bg-cyan-500 text-white w-full rounded-md h-8">등록</button>
+                <button className="bg-cyan-400 text-white w-full rounded-md h-10">등록</button>
             </form>
+        </div>
+        <div className="w-11/12 h-[360px] bg-white overflow-y-scroll list-none mt-4 flex flex-col rounded-md p-3">
+        { accountList && 
+            <ul>{accountList.map((a:MyAccount)=>(
+                <li key={a.id} className="border-b p-2">
+                    <div>
+                        <p className="font-bold text-violet-700 text-lg">{a.bankName}</p>
+                        <span className="">{a.accountNumber}   </span>
+                        <span className="">{a.accountHolder}</span>
+                        <p className="">{a.balance}원</p>
+                    </div>
+                </li>))}
+            </ul>
+    
+        }
         </div>
     </div>)
 }

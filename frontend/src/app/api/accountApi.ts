@@ -7,4 +7,10 @@ const piggyApi = axios.create({
 
 export const createAccount = async(account:MyAccount) => {
     const response = await piggyApi.post("/account",account)
+    return response.data
+}
+
+export const getMyAccount = async(id:number) => {
+  const response = await piggyApi.get(`/account/all/${id}`)
+  return response.data
 }

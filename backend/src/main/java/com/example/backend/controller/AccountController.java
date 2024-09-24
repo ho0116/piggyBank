@@ -16,9 +16,9 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    @GetMapping
-    public List<Account> getAllAccount() {
-        return accountService.getAllAccount();
+    @GetMapping("/all/{userId}")
+    public List<Account> getAllAccount(@PathVariable Long userId) {
+        return accountService.getAllAccountById(userId);
     }
 
     @GetMapping("/{id}")
