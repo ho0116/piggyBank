@@ -1,18 +1,15 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createChallenge } from "../../api/challengeApi";
 import Challenge from "../../types/challengeType";
 import useAuth from "../../hooks/useAuth";
-
+import { getMyAccount } from "@/app/api/accountApi";
 
 export default function ChallengePage() {
-
-
-  
   const { user } = useAuth();
 
   const [startDate, setStartDate] = useState<Date | null>(new Date());
@@ -20,12 +17,20 @@ export default function ChallengePage() {
   const [challengeName, setChallengeName] = useState<string>("");
   const [challengeDescription, setChallengeDescription] = useState<string>("");
   const [targetAmount, setTargetAmount] = useState<string>("");
-  const challengeStatus : string = "In Progress";
-  const savingCycle : number = 12;
-  const userId : number = user?.id;
-  const accountId : number = 2;
-  const savedAmount : number = 10000;
+  const [selectedAccount, setSelectedAccount] = useState<number>(0);
 
+  const {data:accountList, isLoading, isError} = useQuery({
+    queryKey:["accountList"],
+    queryFn: () => getMyAccount(user?.id as number),
+    enabled: !!user?.id,
+    refetchOnMount: true,
+})
+console.log(accountList);
+  const challengeStatus: string = "In Progress";
+  const savingCycle: number = 12;
+  const userId: number = user?.id;
+  const accountId : number = selectedAccount;
+  const savedAmount: number = 10000;
 
   const mutation = useMutation({
     mutationFn: createChallenge,
@@ -41,7 +46,7 @@ export default function ChallengePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const challenge : Challenge = {
+    const challenge: Challenge = {
       userId,
       accountId,
       savedAmount,
@@ -55,8 +60,15 @@ export default function ChallengePage() {
     };
 
     mutation.mutate(challenge);
-    
   };
+
+
+
+
+  // const handleAccountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setSelectedAccount(e.target.value)
+  // };
+
 
   return (
     <div className="max-w-lg mx-auto p-6">
@@ -126,6 +138,27 @@ export default function ChallengePage() {
             onChange={(e) => setTargetAmount(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="account" className="block text-sm font-medium">
+            계좌 선택
+          </label>
+          <select
+          id="account"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={selectedAccount}
+          // onChange={handleAccountChange}
+        >
+          <option value="" disabled>
+            계좌를 선택해주세요
+          </option>
+          {accountList?.map((account: { id: number; accountNumber: string }) => (
+            <option key={account.id} value={account.id}>
+              {account.accountNumber}
+            </option>
+          ))}
+        </select>
         </div>
 
         <button
