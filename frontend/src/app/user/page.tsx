@@ -1,12 +1,12 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { Users } from "../types";
+import { User } from "../types";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { join } from "../api/api";
 
 export default function JoinForm() {
-  const [users, setUsers] = useState<Users>({
+  const [users, setUsers] = useState<User>({
     username: "",
     password: "",
     email: "",
