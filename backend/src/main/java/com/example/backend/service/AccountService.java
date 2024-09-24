@@ -43,8 +43,8 @@ public class AccountService {
         return savedAccount;
     }
 
-    public Account updateAccount(AccountDto accountDto){
-        Optional<Account> existingAccount = accountRepository.findById(accountDto.getId());
+    public Account updateAccount(Long id, AccountDto accountDto){
+        Optional<Account> existingAccount = accountRepository.findById(id);
 
         if (existingAccount.isPresent()) {
             Account updatedAccount = existingAccount.get();

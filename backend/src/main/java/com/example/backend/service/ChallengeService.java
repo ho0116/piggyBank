@@ -1,9 +1,11 @@
 package com.example.backend.service;
 
 import com.example.backend.dto.ChallengeDto;
+import com.example.backend.model.Account;
 import com.example.backend.model.Challenge;
 import com.example.backend.model.User;
 import com.example.backend.model.VirtualAccount;
+import com.example.backend.repository.AccountRepository;
 import com.example.backend.repository.ChallengeRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.repository.VirtualAccountRepository;
@@ -21,6 +23,7 @@ public class ChallengeService {
     private final ChallengeRepository challengeRepository;
     private final UserRepository userRepository;
     private final VirtualAccountRepository virtualAccountRepository;
+    private final AccountRepository accountRepository;
 
     public List<Challenge> getAllChallenges() {
         return challengeRepository.findAll();
@@ -42,19 +45,24 @@ public class ChallengeService {
         challenge.setEndDate(challengeDto.getEndDate());
         challenge.setSavingCycle(challengeDto.getSavingCycle());
         challenge.setTargetAmount(challengeDto.getTargetAmount());
-        challenge.setSavedAmount(challengeDto.getSavedAmount());
+        challenge.setSavedAmount(BigDecimal.ZERO);
         challenge.setUser(user);
 
-        Challenge savedChallenge = challengeRepository.save(challenge);
+        Account account = accountRepository.findById(challengeDto.getAccountId())
+                .orElse(null);
+        challenge.setAccount(account);
+
+        challenge = challengeRepository.save(challenge);
 
         VirtualAccount virtualAccount = new VirtualAccount();
         virtualAccount.setAccountNumber(generateRandomAccountNumber());  // 랜덤 가상 계좌 번호 생성
-        virtualAccount.setChallenge(challenge);
+        virtualAccount.setChallenge(challenge);  // VirtualAccount에 Challenge 연결
         virtualAccount.setBalance(BigDecimal.ZERO);
 
-        virtualAccountRepository.save(virtualAccount);
+        virtualAccount = virtualAccountRepository.save(virtualAccount);
 
-        return savedChallenge;
+        challenge.setVirtualAccount(virtualAccount);
+        return challengeRepository.save(challenge);
 
     }
 
@@ -67,8 +75,8 @@ public class ChallengeService {
         return accountNumber.toString();
     }
 
-    public Challenge updateChallenge(ChallengeDto challengeDto) {
-        Optional<Challenge> existingChallenge = challengeRepository.findById(challengeDto.getId());
+    public Challenge updateChallenge(Long id, ChallengeDto challengeDto) {
+        Optional<Challenge> existingChallenge = challengeRepository.findById(id);
 
         if (existingChallenge.isPresent()) {
             Challenge updatedChallenge = existingChallenge.get();

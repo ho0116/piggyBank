@@ -24,7 +24,7 @@ public class TransactionService {
     private final ChallengeRepository challengeRepository;
 
     public Transaction createTransaction(TransactionDto transactionDto) {
-        VirtualAccount virtualAccount = virtualAccountRepository.findById(transactionDto.getAccountId())
+        VirtualAccount virtualAccount = virtualAccountRepository.findById(transactionDto.getVirtualAccountId())
                 .orElseThrow(() -> new RuntimeException("Virtual account not found"));
 
         Challenge challenge = virtualAccount.getChallenge();
@@ -36,13 +36,11 @@ public class TransactionService {
         BigDecimal amount = transactionDto.getAmount();
 
         // 계좌에서 출금
-        Account account = accountRepository.findById(transactionDto.getAccountId())
-                .orElseThrow(() -> new RuntimeException("Account not found"));
+        Account account = virtualAccount.getChallenge().getAccount();
 
         if (account.getBalance().compareTo(amount) < 0) {
             throw new RuntimeException("잔액 부족");
         }
-
 
         account.setBalance(account.getBalance().subtract(amount));
         accountRepository.save(account);

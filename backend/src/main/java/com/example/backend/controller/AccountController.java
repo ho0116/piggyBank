@@ -31,9 +31,9 @@ public class AccountController {
         return accountService.createAccount(accountDto);
     }
 
-    @PutMapping
-    public Account updateAccount(@RequestBody AccountDto accountDto) {
-        return accountService.updateAccount(accountDto);
+    @PutMapping("/{id}")
+    public Account updateAccount(@PathVariable Long id, @RequestBody AccountDto accountDto) {
+        return accountService.updateAccount(id, accountDto);
     }
 
     @DeleteMapping("/{id}")

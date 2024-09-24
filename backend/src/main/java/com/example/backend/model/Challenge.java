@@ -44,4 +44,8 @@ public class Challenge {
 
     @OneToOne(mappedBy = "challenge", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private VirtualAccount virtualAccount;
+
+    @OneToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
 }

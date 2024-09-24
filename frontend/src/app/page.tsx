@@ -4,7 +4,7 @@ import logo from '../image/piggyBank.png'
 
 export default function Home() {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center items-center">
       <div>
         <Image src={logo} width={200} height={200} alt="logo"></Image>
       </div>

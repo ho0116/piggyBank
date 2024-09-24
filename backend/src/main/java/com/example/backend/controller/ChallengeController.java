@@ -30,9 +30,9 @@ public class ChallengeController {
         return challengeService.createChallenge(challengeDto);
     }
 
-    @PutMapping
-    public Challenge updateChallenge(@RequestBody ChallengeDto challengeDto){
-        return challengeService.updateChallenge(challengeDto);
+    @PutMapping("/{id}")
+    public Challenge updateChallenge(@PathVariable Long id, @RequestBody ChallengeDto challengeDto){
+        return challengeService.updateChallenge(id, challengeDto);
     }
 
     @DeleteMapping("/{id}")
