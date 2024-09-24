@@ -25,8 +25,13 @@ public class ChallengeService {
     private final VirtualAccountRepository virtualAccountRepository;
     private final AccountRepository accountRepository;
 
-    public List<Challenge> getAllChallenges() {
-        return challengeRepository.findAll();
+//    public List<Challenge> getAllChallenges() {
+//        return challengeRepository.findAll();
+//    }
+
+    public List<Challenge> getAllChallengesById(Long userId){
+//        System.out.print(userId);
+        return challengeRepository.findAllByUser_Id(userId);
     }
 
     public Challenge getChallenge(Long id){
