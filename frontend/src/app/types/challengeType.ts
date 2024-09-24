@@ -5,9 +5,9 @@ export default interface Challenge{
     savedAmount:number,
     targetAmount:number,
     savingCycle: number,
-    startDate: string,
-    endDate: string,
-    challengeName: string,
+    startDate: string, 
+    endDate: string | null, 
+    challengeName: string, 
     challengeStatus: string,
-    challengeDescription: string,
+    challengeDescription: string, 
 }
