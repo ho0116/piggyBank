@@ -10,7 +10,7 @@ export default function ChallengeList(){
     // const [list, setList] = useState([]);
     const {user} = useAuth();
     
-    const {data:challengeList, isLoading, isError} = useQuery({
+    const {data:challengeList, isLoading, isError, error} = useQuery({
         queryKey:["challengeList"],
         queryFn: ()=> getAllChallenges(user?.id as number),
         enabled: !!user?.id,
@@ -22,7 +22,7 @@ export default function ChallengeList(){
         <div>
             <p className="font-bold text-2xl text-center pt-5 text-cyan-500">챌린지 리스트</p>
             {isLoading && <div>Loading</div>}
-            {isError && <div>Error</div>}
+            {isError && <div>{error.message}</div>}
             {!isError && challengeList && 
         
             <ul className="max-h-[80%] overflow-y-scroll list-none mt-4 flex flex-col items-center">

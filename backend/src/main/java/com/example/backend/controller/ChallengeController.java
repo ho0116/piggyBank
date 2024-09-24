@@ -15,9 +15,10 @@ import java.util.List;
 public class ChallengeController {
     private final ChallengeService challengeService;
 
-    @GetMapping
-    public List<Challenge> getAllChallenges(){
-        return challengeService.getAllChallenges();
+    @GetMapping("/all/{userId}")
+    public List<Challenge> getAllChallenges(@PathVariable Long userId){
+        System.out.println(userId);
+        return challengeService.getAllChallengesById(userId);
     }
 
     @GetMapping("/{id}")
