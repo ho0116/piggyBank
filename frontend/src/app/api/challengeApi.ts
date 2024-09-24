@@ -7,7 +7,7 @@ const piggyApi = axios.create({
 
 export const getAllChallenges = async(id:number) => {
     console.log(id)
-    const response = await piggyApi.get(`/challenge/all/${id}`);
+    const response = await piggyApi.get(`/challenge/all/{id}`);
     return response.data
 }
 
