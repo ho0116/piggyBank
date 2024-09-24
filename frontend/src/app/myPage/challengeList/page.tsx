@@ -15,14 +15,26 @@ export default function ChallengeList(){
 
     return (
         <div>
+            <p className="font-bold text-2xl text-center pt-5 text-cyan-500">챌린지 리스트</p>
             {isLoading && <div>Loading</div>}
             {isError && <div>Error</div>}
             {challengeList && 
-            <ul>
-                {challengeList.map((c:challenge)=>(
-                    <li key={c.id}>{c.challengeName}</li>
-                ))}
-            </ul>}
+        
+            <ul className="max-h-[80%] overflow-y-scroll list-none mt-4 flex flex-col items-center">
+            {challengeList.map((c: challenge) => (
+              <li key={c.id} className="py-4 px-2 bg-white rounded-2xl w-10/12 shadow-md shadow-violet-200/20 mb-6">
+                <div>
+                    <p className="font-bold text-lg">{c.challengeName}</p>
+                    <p className="text-sm text-gray-500">{c.startDate} ~ {c.endDate}</p>
+                    <p className={c.challengeStatus === "In Progress" ? "text-blue-500 w-20 text-sm mb-2" : "bg-red-500  w-20 text-sm mb-2"}>{c.challengeStatus}</p>
+                    {/* <p>현재 저축액 <span className="text-violet-700 font-semibold">{c.savedAmount} 원</span> </p> */}
+                    <p><span>달성률 </span> <span className="text-violet-700 font-semibold">{c.savedAmount/c.targetAmount * 100} %</span> </p>
+                    {/* <p>{c.challengeDescription}</p> */}
+                    <p>{c.challengeDescription}</p>
+                </div>
+              </li>
+            ))}
+          </ul>}
         </div>
     )
 }
