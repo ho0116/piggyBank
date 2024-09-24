@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function MyPage() {
   const { user, removeUser } = useAuth();
+  console.log(user)
   const router = useRouter();
   return (
     <div className=" flex flex-col justify-center items-center min-h-screen ">
@@ -28,6 +29,11 @@ export default function MyPage() {
       <div>
         <button className="bg-transparent text-black border-2 border-violet-300 px-4 py-2 rounded-lg w-48 h-16 shadow-sm">
           <Link href={"myPage/challengeList"}>챌린지 관리</Link>
+        </button>
+      </div>
+      <div>
+        <button className="bg-transparent text-black border-2 border-red-300 px-4 py-2 rounded-lg w-48 h-16 shadow-sm">
+          <Link href={"/challenge/create"}>챌린지 생성</Link>
         </button>
       </div>
     </div>
