@@ -1,9 +1,9 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { User } from "../types/userTypes";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { join } from "../api/authApi";
+import { join } from "@/app/api/authApi";
+import { User } from "@/app/types/userTypes";
 
 export default function JoinForm() {
   const [users, setUsers] = useState<User>({
@@ -16,7 +16,7 @@ export default function JoinForm() {
     mutationFn: join,
     onSuccess: () => {
       alert("가입 성공!");
-      router.push("/login");
+      router.push("/user/login");
     },
     onError: () => {
       alert("가입 실패!");

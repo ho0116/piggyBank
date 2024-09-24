@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const piggyApi = axios.create({
-  baseURL: "http://localhost:8081",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 export const getAllChallenges = async() => {

@@ -1,17 +1,17 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { User } from "../types/userTypes";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../api/authApi";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { User } from "../../types/userTypes";
+import { login } from "../../api/authApi";
 
 export default function LoginForm() {
   const [users, setUsers] = useState<User>({
-    username: "",
     password: "",
     email: "",
   });
+
   const router = useRouter();
   const { setUser } = useAuth();
 
@@ -64,12 +64,22 @@ export default function LoginForm() {
             className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
-        >
-          로그인
-        </button>
+        <div className="mb-4">
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+          >
+            로그인
+          </button>
+        </div>
+        <div className="mb-4">
+          <button
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+            onClick={() => router.push("/user/join")}
+          >
+            회원가입
+          </button>
+        </div>
       </form>
     </div>
   );

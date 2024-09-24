@@ -1,15 +1,15 @@
 import axios from "axios";
-import { Users } from "../types/userTypes";
+import { User } from "../types/userTypes";
 
 const piggyApi = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
-export const join = async (user: Users) => {
-  await piggyApi.post("/user", user);
+export const join = async (user: User) => {
+  await piggyApi.post("/user/join", user);
 };
 
-export const login = async (user: Users) => {
-  const response = await piggyApi.post("/login", user);
+export const login = async (user: User) => {
+  const response = await piggyApi.post("/user/login", user);
   return response.data;
 };
