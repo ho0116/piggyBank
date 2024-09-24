@@ -1,8 +1,8 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { User } from "../types";
+import { User } from "../types/userTypes";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../api/api";
+import { login } from "../api/authApi";
 import useAuth from "../hooks/useAuth";
 import { useRouter } from "next/navigation";
 
