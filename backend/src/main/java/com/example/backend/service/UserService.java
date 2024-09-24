@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.dto.UserDto;
 import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +12,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
-    public User getUser(Long id){
-        return userRepository.findById(id).orElse(null);
+    public User getUser(UserDto userDto) {
+        User user = userRepository.findByEmail(userDto.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+        if (!user.getPassword().equals(userDto.getPassword())) {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
+        return user;
     }
 
     public User createUser(User user){

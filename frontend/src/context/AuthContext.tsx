@@ -1,10 +1,11 @@
 "use client";
-import { Users } from "@/app/types";
+
+import { User } from "@/app/types/userTypes";
 import { createContext, ReactNode, useState } from "react";
 
 interface AuthContextType {
-  user: Users | null;
-  setUser: (user: Users) => void;
+  user: User | null;
+  setUser: (user: User) => void;
   removeUser: () => void;
 }
 
@@ -15,12 +16,12 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [users, setUsers] = useState<Users | null>(null);
+  const [users, setUsers] = useState<User | null>(null);
   return (
     <AuthContext.Provider
       value={{
         user: users,
-        setUser: (user: Users) => setUsers(user),
+        setUser: (user: User) => setUsers(user),
         removeUser: () => setUsers(null),
       }}
     >
