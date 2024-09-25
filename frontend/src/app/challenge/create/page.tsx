@@ -8,16 +8,18 @@ import { createChallenge } from "../../api/challengeApi";
 import Challenge from "../../types/challengeType";
 import useAuth from "../../hooks/useAuth";
 import { getMyAccount } from "@/app/api/accountApi";
+import { useRouter } from "next/navigation";
 
 export default function ChallengePage() {
   const { user } = useAuth();
+  const router = useRouter();
 
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [challengeName, setChallengeName] = useState<string>("");
   const [challengeDescription, setChallengeDescription] = useState<string>("");
   const [targetAmount, setTargetAmount] = useState<string>("");
-  const [selectedAccount, setSelectedAccount] = useState<number>(0);
+  const [selectedAccount, setSelectedAccount] = useState<number | "">("");
 
   const {data:accountList, isLoading, isError} = useQuery({
     queryKey:["accountList"],
@@ -65,9 +67,9 @@ console.log(accountList);
 
 
 
-  // const handleAccountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   setSelectedAccount(e.target.value)
-  // };
+  const handleAccountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedAccount(Number(e.target.value));
+  };
 
 
   return (
@@ -148,7 +150,7 @@ console.log(accountList);
           id="account"
           className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={selectedAccount}
-          // onChange={handleAccountChange}
+          onChange={handleAccountChange}
         >
           <option value="" disabled>
             계좌를 선택해주세요
@@ -163,7 +165,8 @@ console.log(accountList);
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+          className="mt-12 bg-cyan-500 text-white w-full h-12 rounded-md font-semibold"
+          onClick={()=>{router.push("/myPage")}}
         >
           챌린지 생성
         </button>

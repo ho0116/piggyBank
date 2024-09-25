@@ -13,15 +13,10 @@ import { useRouter } from "next/navigation";
 
 export default function ChallengeList() {
   const { user } = useAuth();
-<<<<<<< Updated upstream
-  const { starredChallenge, setStarredChallenge } = useStar(); // Star 상태 가져오기
-
-=======
   
   const router = useRouter();
 
   const { starredChallenge, setStarredChallenge } = useStar(); // Star 상태 가져오기
->>>>>>> Stashed changes
   const {
     data: challengeList,
     isLoading,

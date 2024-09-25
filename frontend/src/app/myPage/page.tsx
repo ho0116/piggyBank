@@ -12,6 +12,23 @@ export default function MyPage() {
   const router = useRouter();
   return (
     <div className=" flex flex-col justify-center items-center min-h-screen ">
+      
+      <div>
+        <button className="mt-12 bg-custom text-white w-48 h-16 rounded-lg font-semibold">
+          <Link href={"myPage/account"}>계좌 관리</Link>
+        </button>
+      </div>
+      <div>
+        <button className="mt-12 bg-custom text-white w-48 h-16 rounded-lg font-semibold">
+          <Link href={"myPage/challengeList"}>챌린지 관리</Link>
+        </button>
+      </div>
+      <div>
+        <button className="mt-12 bg-custom text-white w-48 h-16 rounded-lg font-semibold">
+          <Link href={"/challenge/create"}>챌린지 생성</Link>
+        </button>
+      </div>
+
       {user ? (
         <button
           onClick={() => {
@@ -19,27 +36,13 @@ export default function MyPage() {
             setStarredChallenge(null);
             router.push("/user/login");
           }}
+          className="mt-12 bg-red-300 text-white w-48 h-16 rounded-lg font-semibold"
         >
           로그아웃
         </button>
       ) : (
-        <button onClick={() => router.push("/user/login")}>로그인</button>
+        <button className="mt-12 bg-blue-300 text-white w-48 h-16 rounded-lg font-semibold" onClick={() => router.push("/user/login")}>로그인</button>
       )}
-      <div className="mb-16">
-        <button className="bg-transparent text-black border-2 border-violet-300 px-4 py-2 rounded-lg w-48 h-16 shadow-sm">
-          <Link href={"myPage/account"}>계좌 관리</Link>
-        </button>
-      </div>
-      <div>
-        <button className="bg-transparent text-black border-2 border-violet-300 px-4 py-2 rounded-lg w-48 h-16 shadow-sm">
-          <Link href={"myPage/challengeList"}>챌린지 관리</Link>
-        </button>
-      </div>
-      <div>
-        <button className="bg-transparent text-black border-2 border-red-300 px-4 py-2 rounded-lg w-48 h-16 shadow-sm">
-          <Link href={"/challenge/create"}>챌린지 생성</Link>
-        </button>
-      </div>
     </div>
   );
 }
