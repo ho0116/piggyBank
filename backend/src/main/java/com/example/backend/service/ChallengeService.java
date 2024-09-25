@@ -52,6 +52,7 @@ public class ChallengeService {
         challenge.setTargetAmount(challengeDto.getTargetAmount());
         challenge.setSavedAmount(BigDecimal.ZERO);
         challenge.setUser(user);
+        challenge.setAmount(challengeDto.getAmount());
 
         Account account = accountRepository.findById(challengeDto.getAccountId())
                 .orElse(null);
@@ -91,6 +92,7 @@ public class ChallengeService {
             updatedChallenge.setEndDate(challengeDto.getEndDate());
             updatedChallenge.setSavingCycle(challengeDto.getSavingCycle());
             updatedChallenge.setTargetAmount(challengeDto.getTargetAmount());
+            updatedChallenge.setAmount(challengeDto.getAmount());
 //            updatedChallenge.setSavedAmount(challengeDto.getSavedAmount());
 
             return challengeRepository.save(updatedChallenge);

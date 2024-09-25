@@ -5,6 +5,7 @@ export default interface Challenge{
     virtualAccountId?:number | undefined,
     savedAmount:number,
     targetAmount:number,
+    amount:number,
     savingCycle: number,
     startDate: string, 
     endDate: string | null, 

@@ -17,4 +17,5 @@ public class ChallengeDto {
     private String challengeStatus;
     private Long userId;
     private Long accountId;
+    private BigDecimal amount;
 }

@@ -22,11 +22,13 @@ export default function detailPage () {
         description: '',
     });
 
-    // useEffect(()=>{
-    //     setTransaction({
-    //         virtualAccountId: currentChallenge.
-    //     })
-    // },[transaction])
+    useEffect(()=>{
+        setTransaction({
+            virtualAccountId: currentChallenge?.virtualAccountId as number,
+            amount: currentChallenge?.amount as number,
+            description: currentChallenge?.challengeName as string
+        })
+    },[transaction])
 
     const saveMutation = useMutation({
         mutationFn: saveMoney

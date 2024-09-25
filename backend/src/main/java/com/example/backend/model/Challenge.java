@@ -27,6 +27,9 @@ public class Challenge {
     @Column(name = "saved_amount")
     private BigDecimal savedAmount;
 
+    @Column(name = "amount")
+    private BigDecimal amount;
+
     @Column(name = "start_date")
     private LocalDate startDate;
 
@@ -42,7 +45,8 @@ public class Challenge {
     @Column(name = "challenge_status", length = 50)
     private String challengeStatus;
 
-    @OneToOne(mappedBy = "challenge", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JoinColumn(name = "virtual_account_id", referencedColumnName = "id")
     private VirtualAccount virtualAccount;
 
     @ManyToOne
