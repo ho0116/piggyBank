@@ -14,7 +14,12 @@ export default function ChallengeList() {
   const { user } = useAuth();
   const { starredChallenge, setStarredChallenge } = useStar(); // Star 상태 가져오기
 
-  const { data: challengeList, isLoading, isError, error } = useQuery({
+  const {
+    data: challengeList,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["challengeList"],
     queryFn: () => getAllChallenges(user?.id as number),
     enabled: !!user?.id,
@@ -28,7 +33,8 @@ export default function ChallengeList() {
   const calculateItemsPerPage = () => {
     if (itemRef.current) {
       const itemHeight = itemRef.current.clientHeight; // 실제 항목 높이 가져오기
-      const availableHeight = window.innerHeight - document.querySelector("nav")!.clientHeight - 40; // 네비게이션 바 높이 제외
+      const availableHeight =
+        window.innerHeight - document.querySelector("nav")!.clientHeight - 80; // 네비게이션 바 높이 제외
       return Math.floor(availableHeight / itemHeight);
     }
     return 3; // 기본값
@@ -64,88 +70,92 @@ export default function ChallengeList() {
   };
 
   return (
-    <div className="relative flex flex-col justify-between h-[calc(100vh-80px)]"> {/* 100vh에서 네비게이션 높이를 뺀 값으로 설정 */}
-      <p className="font-bold text-2xl text-center pt-5 text-cyan-500">
-        챌린지 리스트
-      </p>
-      <div className="overflow-y-auto flex-grow mt-4"> {/* 리스트 부분을 스크롤 가능하게 설정 */}
-        {isLoading && <div>Loading</div>}
-        {isError && <div>{error?.message}</div>}
-        {!isError && currentItems && (
-          <ul className="max-h-[80%] list-none flex flex-col items-center space-y-6">
-            {currentItems.map((c: challenge, index: number) => (
-              <li
-                key={c.id}
-                className="py-4 px-2 bg-white rounded-2xl w-10/12 shadow-md shadow-violet-200/20"
-                ref={index === 0 ? itemRef : null} // 첫 번째 항목에 ref 적용
+    <div className="relative flex flex-col h-[calc(100vh-80px)]"> {/* 전체 화면 높이에서 네비게이션 바 높이 제외 */}
+  <p className="font-bold text-2xl text-center pt-5 text-cyan-500">
+    챌린지 리스트
+  </p>
+  
+  {/* 챌린지 리스트 */}
+  <div className="flex-grow mt-4"> {/* flex-grow를 사용해 리스트가 남은 공간을 채움 */}
+    {isLoading && <div>Loading...</div>}
+    {isError && <div>{error?.message}</div>}
+    {!isError && currentItems && (
+      <ul className="list-none flex flex-col items-center space-y-6"> {/* 챌린지는 상단에 정렬 */}
+        {currentItems.map((c: challenge, index: number) => (
+          <li
+            key={c.id}
+            className="py-4 px-2 bg-white rounded-2xl w-10/12 shadow-md shadow-violet-200/20"
+            ref={index === 0 ? itemRef : null} // 첫 번째 항목에 ref 적용
+          >
+            <div>
+              <div className="flex justify-between items-center">
+                <p className="font-bold text-lg">{c.challengeName}</p>
+                {starredChallenge?.id === c.id ? (
+                  <button onClick={handleUnStar}>
+                    <Image
+                      src={star_fill}
+                      width={20}
+                      height={20}
+                      alt="star_fill"
+                    />
+                  </button>
+                ) : (
+                  <button onClick={() => handleStar(c)}>
+                    <Image
+                      src={star_outline}
+                      width={20}
+                      height={20}
+                      alt="star_outline"
+                    />
+                  </button>
+                )}
+              </div>
+              <p className="text-sm text-gray-500">
+                {c.startDate} ~ {c.endDate}
+              </p>
+              <p
+                className={
+                  c.challengeStatus === "In Progress"
+                    ? "text-blue-500 w-20 text-sm mb-1"
+                    : "bg-red-500 w-20 text-sm mb-1"
+                }
               >
-                <div>
-                  <div className="flex justify-between items-center">
-                    <p className="font-bold text-lg">{c.challengeName}</p>
-                    {starredChallenge?.id === c.id? (
-                      <button onClick={handleUnStar}>
-                        <Image
-                          src={star_fill}
-                          width={20}
-                          height={20}
-                          alt="star_fill"
-                        />
-                      </button>
-                    ) : (
-                      <button onClick={() => handleStar(c)}>
-                        <Image
-                          src={star_outline}
-                          width={20}
-                          height={20}
-                          alt="star_outline"
-                        />
-                      </button>
-                    )}
-                  </div>
-                  <p className="text-sm text-gray-500">
-                    {c.startDate} ~ {c.endDate}
-                  </p>
-                  <p
-                    className={
-                      c.challengeStatus === "In Progress"
-                        ? "text-blue-500 w-20 text-sm mb-1"
-                        : "bg-red-500 w-20 text-sm mb-1"
-                    }
-                  >
-                    {c.challengeStatus}
-                  </p>
-                  <p>
-                    <span>달성률 </span>{" "}
-                    <span className="text-violet-700 font-semibold">
-                      {(c.savedAmount / c.targetAmount) * 100} %
-                    </span>
-                  </p>
-                  <p>{c.challengeDescription}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+                {c.challengeStatus}
+              </p>
+              <p>
+                <span>달성률 </span>{" "}
+                <span className="text-violet-700 font-semibold">
+                  {(c.savedAmount / c.targetAmount) * 100} %
+                </span>
+              </p>
+              <p>{c.challengeDescription}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
 
-      {/* 페이지네이션 버튼 */}
-      <div className="flex justify-center items-center mt-4 mb-4"> {/* 페이지네이션이 리스트 끝에 고정되도록 설정 */}
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-          (pageNumber) => (
-            <button
-              key={pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
-              className={`mx-1 px-2 py-1 ${
-                currentPage === pageNumber
-                  ? "bg-purple-500 text-white"
-                  : "bg-purple-200 text-purple-700"
-              } rounded`}
-            >
-              {pageNumber}
-            </button>
-          )
-        )}
-      </div>
+  {/* 페이지네이션 버튼 */}
+  <div className="mb-4"> {/* 리스트 끝에 페이지네이션 버튼이 위치하도록 설정 */}
+    <div className="flex justify-center items-center">
+      {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+        (pageNumber) => (
+          <button
+            key={pageNumber}
+            onClick={() => handlePageChange(pageNumber)}
+            className={`mx-1 px-2 py-1 ${
+              currentPage === pageNumber
+                ? "bg-purple-500 text-white"
+                : "bg-purple-200 text-purple-700"
+            } rounded`}
+          >
+            {pageNumber}
+          </button>
+        )
+      )}
     </div>
+  </div>
+</div>
   );
 }

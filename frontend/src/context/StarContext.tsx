@@ -1,14 +1,8 @@
-// starContext.tsx
 "use client";
 
 import Challenge from "@/app/types/challengeType";
-import {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  useEffect,
-} from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import useAuth from "@/app/hooks/useAuth"; // 유저 정보를 가져오는 hook
 
 // Context 타입 정의
 interface StarContextType {
@@ -21,24 +15,28 @@ const StarContext = createContext<StarContextType | undefined>(undefined);
 
 // Provider 생성
 export const StarProvider = ({ children }: { children: ReactNode }) => {
-  const [starredChallenge, setStarredChallengeState] =
-    useState<Challenge | null>(null);
+  const { user } = useAuth(); // 유저 정보 가져오기
+  const [starredChallenge, setStarredChallengeState] = useState<Challenge | null>(null);
 
-  // 페이지가 로드될 때 로컬스토리지에서 저장된 대표 챌린지를 가져옴
+  // 페이지가 로드될 때 로컬스토리지에서 저장된 사용자별 대표 챌린지를 가져옴
   useEffect(() => {
-    const savedChallenge = localStorage.getItem("starredChallenge");
-    if (savedChallenge) {
-      setStarredChallengeState(JSON.parse(savedChallenge));
+    if (user?.id) { // 로그인한 사용자가 있는지 확인
+      const savedChallenge = localStorage.getItem(`starredChallenge_${user.id}`); // 사용자 ID에 맞는 저장된 챌린지를 불러옴
+      if (savedChallenge) {
+        setStarredChallengeState(JSON.parse(savedChallenge));
+      }
     }
-  }, []);
+  }, [user]); // user가 변경될 때마다 실행
 
-  // 대표 챌린지 설정 시 로컬스토리지에 저장
+  // 대표 챌린지 설정 시 사용자별로 로컬스토리지에 저장
   const setStarredChallenge = (challenge: Challenge | null) => {
     setStarredChallengeState(challenge);
-    if (challenge) {
-      localStorage.setItem("starredChallenge", JSON.stringify(challenge)); // 로컬스토리지에 저장
-    } else {
-      localStorage.removeItem("starredChallenge"); // 선택 해제 시 로컬스토리지에서 제거
+    if (user?.id) {
+      if (challenge) {
+        localStorage.setItem(`starredChallenge_${user.id}`, JSON.stringify(challenge)); // 사용자 ID를 기반으로 저장
+      } else {
+        localStorage.removeItem(`starredChallenge_${user.id}`); // 선택 해제 시 로컬스토리지에서 제거
+      }
     }
   };
 
