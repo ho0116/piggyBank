@@ -3,7 +3,7 @@
 import { createAccount, deleteAccount, getMyAccount } from "@/app/api/accountApi";
 import useAuth from "@/app/hooks/useAuth";
 import MyAccount from "@/app/types/accountType";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query"
+import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react"
 
@@ -37,7 +37,7 @@ export default function Account(){
         enabled: !!user?.id,
     })
 
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
 
     const createMutate = useMutation({
         mutationFn:createAccount,
@@ -67,6 +67,7 @@ export default function Account(){
     const deleteMutation = useMutation({
         mutationFn: deleteAccount,
         onSuccess: ()=>{
+            queryClient.invalidateQueries({ queryKey: ["accountList"] });
             alert('삭제 성공')
         }
     })
@@ -103,11 +104,11 @@ export default function Account(){
             <ul>{accountList.map((a:MyAccount)=>(
                 <li key={a.id} className="border-b p-2">
                     <div>
-                        <p className="font-bold text-violet-700 text-lg">{a.bankName}</p>
-                        <span className="">{a.accountNumber}   </span>
-                        <span className="">{a.accountHolder}</span>
-                        <p className="">{a.balance}원</p>
-                        <button className="bg-red-500 text-white rounded-md px-1 text-sm" onClick={() => a.id && handleDelete(a.id)}>삭제</button>
+                        <p className="font-semibold text-violet-600 text-md">{a.bankName}</p>
+                        <span className="text-gray-600 text-sm">{a.accountNumber}   </span>
+                        <span className="text-gray-600 text-sm">{a.accountHolder}</span>
+                        <p className="text-gray-600 text-sm">{a.balance}원</p>
+                        <button className="bg-red-500 text-white rounded-md px-1 text-xs" onClick={() => a.id && handleDelete(a.id)}>삭제</button>
                     </div>
                 </li>))}
             </ul>

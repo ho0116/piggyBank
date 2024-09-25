@@ -68,9 +68,9 @@ export default function ChallengeList() {
   };
 
   // Star 설정 핸들러
-  const handleStar = (e: React.MouseEvent, challenge: Challenge) => {
+  const handleStar = (e: React.MouseEvent, id: number) => {
     e.stopPropagation();
-    setStarredChallenge(challenge); // 대표 챌린지 설정
+    setStarredChallenge(id); // 대표 챌린지 설정
   };
 
   // Star 해제 핸들러 (필요하지 않을 수도 있음)
@@ -103,8 +103,8 @@ export default function ChallengeList() {
               >
                 <div>
                   <div className="flex justify-between items-center">
-                    <p className="font-bold text-lg">{c.challengeName}</p>
-                    {starredChallenge?.id === c.id ? (
+                    <p className="font-bold text-md text-gray-600">{c.challengeName}</p>
+                    {starredChallenge == c.id ? (
                       <button onClick={(e) => {handleUnStar(e)}}>
                         <Image
                           src={star_fill}
@@ -114,7 +114,7 @@ export default function ChallengeList() {
                         />
                       </button>
                     ) : (
-                      <button onClick={(e) => {handleStar(e, c)}}>
+                      <button onClick={(e) => {handleStar(e, c.id as number)}}>
                         <Image
                           src={star_outline}
                           width={20}
@@ -124,25 +124,25 @@ export default function ChallengeList() {
                       </button>
                     )}
                   </div>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-xs text-gray-500">
                     {c.startDate} ~ {c.endDate}
                   </p>
                   <p
                     className={
                       c.challengeStatus === "In Progress"
-                        ? "text-blue-500 w-20 text-sm mb-1"
-                        : "bg-red-500 w-20 text-sm mb-1"
+                        ? "text-blue-500 w-20 text-xs mb-1"
+                        : "bg-red-500 w-20 text-xs mb-1"
                     }
                   >
                     {c.challengeStatus}
                   </p>
                   <p>
-                    <span>달성률 </span>{" "}
+                    {/* <span className="text-gray-600 text-sm">달성률 </span> */}
                     <span className="text-violet-700 font-semibold">
-                      {(c.savedAmount / c.targetAmount) * 100} %
+                      {Math.trunc(c.savedAmount / c.targetAmount * 100)} %
                     </span>
                   </p>
-                  <p>{c.challengeDescription}</p>
+                  <p className="text-gray-600 text-sm">{c.challengeDescription}</p>
                 </div>
               </li>
             ))}

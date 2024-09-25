@@ -20,4 +20,8 @@ export const deleteChallenge = async (id: number) =>{
     await piggyApi.delete(`/challenge/${id}`);
 }
 
+export const getChallenge = async(id:number) => {
+  const response = await piggyApi.get(`/challenge/${id}`);
+  return response.data
+}
 
