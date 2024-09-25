@@ -32,7 +32,6 @@ export default function ChallengeList() {
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const itemRef = useRef<HTMLLIElement | null>(null); // ref 선언
 
-  // 동적으로 itemsPerPage 계산 (실제 높이를 기반으로)
   const calculateItemsPerPage = () => {
     if (itemRef.current) {
       const itemHeight = itemRef.current.clientHeight; // 실제 항목 높이 가져오기
