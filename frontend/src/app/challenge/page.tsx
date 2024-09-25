@@ -1,16 +1,22 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createChallenge } from "../api/challengeApi";
 import Challenge from "../types/challengeType";
-
+import { useRouter } from "next/navigation";
+import useAuth from "../hooks/useAuth";
 
 export default function ChallengePage() {
-
-
+  const { user } = useAuth();
+  const router = useRouter();
+  useEffect(() => {
+    if (!user) {
+      router.push("/user/login");
+    }
+  });
 
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(null);

@@ -1,0 +1,5 @@
+
+frontend/.env
+backend/src/main/resources/application.properties
+frontend/.DS_Store
+backend/.DS_Store

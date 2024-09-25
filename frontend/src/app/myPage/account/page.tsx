@@ -75,7 +75,8 @@ export default function Account(){
         deleteMutation.mutate(id);
     };
 
-    return(<div className="flex flex-col justify-center items-center">
+    return(
+    <div className="flex flex-col justify-center items-center min-h-screen">
         <div className="w-11/12 h-[360px] bg-white overflow-y-scroll list-none mt-4 flex flex-col rounded-md p-3 shadow-md shadow-violet-200/20">
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col">
