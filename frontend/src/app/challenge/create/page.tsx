@@ -96,7 +96,7 @@ export default function ChallengePage() {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 text-sm font-medium">
-              이름
+              챌린지명
             </label>
             <input
               id="name"

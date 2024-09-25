@@ -35,17 +35,14 @@ export default function ChallengeList() {
   });
 
   // 계좌 및 챌린지 상태에 따른 리디렉션
-  useEffect(() => {
-    if (!isAccountLoading && !isChallengeLoading) {
-      if (!accountList || accountList.length === 0) {
-        // 계좌가 없는 경우 계좌 생성 페이지로 리디렉션
-        router.push("/myPage/account");
-      } else if (!challengeList || challengeList.length === 0) {
-        // 계좌는 있지만 챌린지가 없는 경우 챌린지 생성 페이지로 리디렉션
-        router.push("/challenge/create");
-      }
-    }
-  }, [accountList, challengeList, isAccountLoading, isChallengeLoading, router]);
+  // useEffect(() => {
+  //   if (!isAccountLoading && !isChallengeLoading) {
+  //     if (!accountList || accountList.length === 0) {
+  //       // 계좌가 없는 경우 계좌 생성 페이지로 리디렉션
+  //       router.push("/myPage/account");
+  //     } 
+  //   }
+  // }, [accountList, challengeList, isAccountLoading, isChallengeLoading, router]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(3);
@@ -107,6 +104,7 @@ export default function ChallengeList() {
       </p>
       {/* 챌린지 리스트 */}
       <div className="flex-grow mt-4">
+        {currentItems.length == 0 && <p className="text-center justify-center text-gray-600 text-sm">리스트를 만들어보세요.</p>}
         {isChallengeLoading && <div>Loading...</div>}
         {isError && <div>{error?.message}</div>}
         {!isError && currentItems && (
