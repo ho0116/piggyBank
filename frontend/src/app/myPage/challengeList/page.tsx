@@ -73,7 +73,7 @@ export default function ChallengeList() {
   };
 
   return (
-    <div className="relative flex flex-col h-[calc(100vh-80px)]"> {/* 전체 화면 높이에서 네비게이션 바 높이 제외 */}
+    <div className="relative flex flex-col h-[calc(100vh-80px)]"> 
   <p className="font-bold text-2xl text-center pt-5 text-cyan-500">
     챌린지 리스트
   </p>

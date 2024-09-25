@@ -24,6 +24,7 @@ public class TransactionService {
     private final ChallengeRepository challengeRepository;
 
     public Transaction createTransaction(TransactionDto transactionDto) {
+        System.out.println(transactionDto.getVirtualAccountId());
         VirtualAccount virtualAccount = virtualAccountRepository.findById(transactionDto.getVirtualAccountId())
                 .orElseThrow(() -> new RuntimeException("Virtual account not found"));
 

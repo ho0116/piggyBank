@@ -15,7 +15,7 @@ public class VirtualAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JoinColumn(name = "challenge_id", referencedColumnName = "id", nullable = false)
     @JsonIgnore
     private Challenge challenge;

@@ -2,7 +2,7 @@ export default interface Challenge{
     id?: number,
     userId: number,
     accountId:number,
-    virtualAccountId?:number | undefined,
+    virtualAccount?:object,
     savedAmount:number,
     targetAmount:number,
     amount:number,

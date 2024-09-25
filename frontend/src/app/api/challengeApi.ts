@@ -16,4 +16,8 @@ export const createChallenge = async (challenge: Challenge) : Promise<Challenge>
     return response.data;
 }
 
+export const deleteChallenge = async (id: number) =>{
+    await piggyApi.delete(`/challenge/${id}`);
+}
+
 

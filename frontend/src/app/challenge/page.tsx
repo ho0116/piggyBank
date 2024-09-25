@@ -28,7 +28,6 @@ export default function ChallengePage() {
   const mutation = useMutation({
     mutationFn: createChallenge,
     onSuccess: (data: Challenge) => {
-      console.log(data);
       alert("챌린지 생성 성공");
     },
     onError: (error: Error) => {
