@@ -19,6 +19,7 @@ export default function ChallengePage() {
   const [challengeName, setChallengeName] = useState<string>("");
   const [challengeDescription, setChallengeDescription] = useState<string>("");
   const [targetAmount, setTargetAmount] = useState<string>("");
+  const [amount, setAmount] = useState<string>("");
   const [selectedAccount, setSelectedAccount] = useState<number | "">("");
 
   const {data:accountList, isLoading, isError} = useQuery({
@@ -53,6 +54,7 @@ console.log(accountList);
       accountId,
       savedAmount,
       targetAmount: parseFloat(targetAmount),
+      amount: parseFloat(amount),
       savingCycle,
       startDate: startDate.toISOString(),
       endDate: endDate ? endDate.toISOString() : null,
@@ -138,6 +140,19 @@ console.log(accountList);
             required
             value={targetAmount}
             onChange={(e) => setTargetAmount(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="amount" className="block text-sm font-medium">
+            저축할 금액
+          </label>
+          <input
+            id="amount"
+            required
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>

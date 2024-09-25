@@ -12,4 +12,5 @@ export default interface Challenge{
     challengeName: string, 
     challengeStatus: string,
     challengeDescription: string, 
+    amount:number,
 }
