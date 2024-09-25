@@ -44,6 +44,7 @@ export default function Account(){
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["accountList"] });
             alert("등록 성공!");
+            router.push("/");
         },
         onError: (error)=>{
             alert("등록 실패")
