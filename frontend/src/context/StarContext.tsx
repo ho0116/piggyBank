@@ -6,8 +6,8 @@ import useAuth from "@/app/hooks/useAuth"; // 유저 정보를 가져오는 hook
 
 // Context 타입 정의
 interface StarContextType {
-  starredChallenge: Challenge | null;
-  setStarredChallenge: (challenge: Challenge | null) => void;
+  starredChallenge: number | null;
+  setStarredChallenge: (id: number | null) => void;
 }
 
 // Context 생성
@@ -16,7 +16,7 @@ const StarContext = createContext<StarContextType | undefined>(undefined);
 // Provider 생성
 export const StarProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth(); // 유저 정보 가져오기
-  const [starredChallenge, setStarredChallengeState] = useState<Challenge | null>(null);
+  const [starredChallenge, setStarredChallengeState] = useState<number | null>(null);
 
   // 페이지가 로드될 때 로컬스토리지에서 저장된 사용자별 대표 챌린지를 가져옴
   useEffect(() => {
@@ -29,11 +29,11 @@ export const StarProvider = ({ children }: { children: ReactNode }) => {
   }, [user]); // user가 변경될 때마다 실행
 
   // 대표 챌린지 설정 시 사용자별로 로컬스토리지에 저장
-  const setStarredChallenge = (challenge: Challenge | null) => {
-    setStarredChallengeState(challenge);
+  const setStarredChallenge = (id: number | null) => {
+    setStarredChallengeState(id);
     if (user?.id) {
-      if (challenge) {
-        localStorage.setItem(`starredChallenge_${user.id}`, JSON.stringify(challenge)); // 사용자 ID를 기반으로 저장
+      if (id) {
+        localStorage.setItem(`starredChallenge_${user.id}`, String(id)); // 사용자 ID를 기반으로 저장
       } else {
         localStorage.removeItem(`starredChallenge_${user.id}`); // 선택 해제 시 로컬스토리지에서 제거
       }

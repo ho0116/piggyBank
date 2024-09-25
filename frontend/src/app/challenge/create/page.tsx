@@ -91,29 +91,29 @@ export default function ChallengePage() {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="max-w-lg mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-6 text-cyan-500">챌린지 만들기</h1>
+      <div className="w-10/12 mx-auto p-6">
+        <h1 className="text-3xl font-bold mb-12 text-cyan-500 text-center">챌린지 만들기</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium">
+            <label htmlFor="name" className="block text-gray-700 text-sm font-medium">
               이름
             </label>
             <input
               id="name"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-200 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={challengeName}
               onChange={(e) => setChallengeName(e.target.value)}
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="ment" className="block text-sm font-medium">
+            <label htmlFor="ment" className="block text-gray-700 text-sm font-medium">
               설명
             </label>
             <input
               id="ment"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-200 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={challengeDescription}
               onChange={(e) => setChallengeDescription(e.target.value)}
             />
@@ -121,7 +121,7 @@ export default function ChallengePage() {
 
           <div className="mb-4">
             {/* 시작 날짜 선택 */}
-            <label htmlFor="start" className="block text-sm font-medium">
+            <label htmlFor="start" className="block text-gray-700 text-sm font-medium">
               시작 날짜:{" "}
             </label>
             <DatePicker
@@ -133,9 +133,10 @@ export default function ChallengePage() {
             />
 
             <br />
+            <br />
 
             {/* 종료 날짜 선택 */}
-            <label htmlFor="end" className="block text-sm font-medium">
+            <label htmlFor="end" className="block text-gray-700 text-sm font-medium">
               종료 날짜:{" "}
             </label>
             <DatePicker
@@ -148,7 +149,7 @@ export default function ChallengePage() {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="amount" className="block text-sm font-medium">
+            <label htmlFor="amount" className="block text-gray-700 text-sm font-medium">
               목표 금액
             </label>
             <input
@@ -156,12 +157,12 @@ export default function ChallengePage() {
               required
               value={targetAmount}
               onChange={(e) => setTargetAmount(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-200 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <div className="mb-4">
-            <label htmlFor="amount" className="block text-sm font-medium">
+            <label htmlFor="amount" className="block text-gray-700 text-sm font-medium">
               저축할 금액
             </label>
             <input
@@ -169,17 +170,17 @@ export default function ChallengePage() {
               required
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-200 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <div className="mb-4">
-            <label htmlFor="account" className="block text-sm font-medium">
+            <label htmlFor="account" className="block text-gray-700 text-sm font-medium">
               계좌 선택
             </label>
             <select
               id="account"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-200 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={selectedAccount}
               onChange={handleAccountChange}
             >
