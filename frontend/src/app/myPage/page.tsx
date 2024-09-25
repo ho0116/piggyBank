@@ -7,7 +7,7 @@ import { useStar } from "@/context/StarContext";
 
 export default function MyPage() {
   const { user, removeUser } = useAuth();
-  const { starredChallenge, setStarredChallenge} = useStar();
+  const { setStarredChallenge} = useStar();
 
   const router = useRouter();
   return (

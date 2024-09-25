@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: linear-gradient(130deg, rgba(221,255,253,1) 1%, rgba(255,255,255,1) 50%, rgba(237,219,255,1) 100%);
+  --background: linear-gradient(
+    130deg,
+    rgba(221, 255, 253, 1) 1%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(237, 219, 255, 1) 100%
+  );
   --foreground: #171717;
   --app-width: 400px; /* 고정된 앱 너비 */
   --app-height: 100vh; /* 유동적으로 설정된 앱 높이 (화면 높이 기준) */
@@ -19,7 +24,7 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: none; /* body에는 배경색을 없앰 */
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
@@ -30,11 +35,10 @@ body {
   overflow: hidden; /* 전체 페이지에서는 스크롤 방지 */
 }
 
-
 #app-container {
   width: var(--app-width); /* 고정된 앱 크기 */
   height: var(--app-height);
-  background-color: var(--background);
+  background: var(--background);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -48,7 +52,7 @@ nav {
   height: 80px; /* 고정된 높이 */
   display: flex;
   justify-content: space-between; /* 버튼을 양쪽에 나란히 배치 */
-  background-color: rgba(233, 217, 250, 0.6); /* 배경색 */
+  background-color: #efe4fe; /* 배경색 */
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* 상단에 그림자 */
   padding: 0;
 }
@@ -79,4 +83,3 @@ nav button {
 nav button:first-child {
   margin-right: 5px; /* 첫 번째 버튼 오른쪽에 여백 */
 }
-

@@ -2,7 +2,6 @@
 import Image from "next/image";
 import logo from "../image/piggyBank.png";
 import { useStar } from "@/context/StarContext";
-import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 export default function Home() {

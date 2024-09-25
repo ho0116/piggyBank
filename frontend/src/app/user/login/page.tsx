@@ -37,8 +37,9 @@ export default function LoginForm() {
   };
 
   return (
+    <div className="flex justify-center items-center min-h-screen">
     <div className="max-w-lg mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">로그인</h1>
+      <h1 className="text-3xl font-bold mb-6 text-cyan-500">로그인</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium">
@@ -71,7 +72,7 @@ export default function LoginForm() {
         <div className="mb-4">
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+            className="w-full bg-purple-500 text-white py-2 rounded-md hover:bg-purple-600 transition-colors"
           >
             로그인
           </button>
@@ -80,6 +81,7 @@ export default function LoginForm() {
           <Link href={"/user/join"}>회원가입</Link>
         </div>
       </form>
+    </div>
     </div>
   );
 }
