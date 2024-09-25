@@ -1,11 +1,12 @@
 "use client";
 
+import Challenge from "@/app/types/challengeType";
 import { createContext, useContext, useState, ReactNode } from "react";
 
 // Context 타입 정의
 interface StarContextType {
-  starredChallenge: string | null;
-  setStarredChallenge: (id: string | null) => void;
+  starredChallenge: Challenge | null;
+  setStarredChallenge: (challenge: Challenge| null) => void;
 }
 
 // Context 생성
@@ -13,7 +14,7 @@ const StarContext = createContext<StarContextType | undefined>(undefined);
 
 // Provider 생성
 export const StarProvider = ({ children }: { children: ReactNode }) => {
-  const [starredChallenge, setStarredChallenge] = useState<string | null>(null); // 초기 상태는 null
+  const [starredChallenge, setStarredChallenge] = useState<Challenge | null>(null); // 초기 상태는 null
 
   return (
     <StarContext.Provider value={{ starredChallenge, setStarredChallenge }}>

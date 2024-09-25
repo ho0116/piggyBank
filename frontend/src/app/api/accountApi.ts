@@ -14,3 +14,7 @@ export const getMyAccount = async(id:number) => {
   const response = await piggyApi.get(`/account/all/${id}`)
   return response.data
 }
+
+export const deleteAccount = async(id:number) => {
+  await piggyApi.delete(`/account/${id}`)
+}
