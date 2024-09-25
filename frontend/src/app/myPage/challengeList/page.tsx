@@ -9,11 +9,19 @@ import star_outline from "../../../image/star_outline.png";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect, useRef } from "react";
 import Challenge from "@/app/types/challengeType";
+import { useRouter } from "next/navigation";
 
 export default function ChallengeList() {
   const { user } = useAuth();
+<<<<<<< Updated upstream
   const { starredChallenge, setStarredChallenge } = useStar(); // Star 상태 가져오기
 
+=======
+  
+  const router = useRouter();
+
+  const { starredChallenge, setStarredChallenge } = useStar(); // Star 상태 가져오기
+>>>>>>> Stashed changes
   const {
     data: challengeList,
     isLoading,
@@ -76,16 +84,17 @@ export default function ChallengeList() {
   </p>
   
   {/* 챌린지 리스트 */}
-  <div className="flex-grow mt-4"> {/* flex-grow를 사용해 리스트가 남은 공간을 채움 */}
+  <div className="flex-grow mt-4">
     {isLoading && <div>Loading...</div>}
     {isError && <div>{error?.message}</div>}
     {!isError && currentItems && (
-      <ul className="list-none flex flex-col items-center space-y-6"> {/* 챌린지는 상단에 정렬 */}
+      <ul className="list-none flex flex-col items-center space-y-6">
         {currentItems.map((c: challenge, index: number) => (
           <li
             key={c.id}
             className="py-4 px-2 bg-white rounded-2xl w-10/12 shadow-md shadow-violet-200/20"
-            ref={index === 0 ? itemRef : null} // 첫 번째 항목에 ref 적용
+            ref={index === 0 ? itemRef : null} 
+            onClick={()=>{router.push(`/challenge/detail/${c.id}`)}}
           >
             <div>
               <div className="flex justify-between items-center">
@@ -137,7 +146,7 @@ export default function ChallengeList() {
   </div>
 
   {/* 페이지네이션 버튼 */}
-  <div className="mb-4"> {/* 리스트 끝에 페이지네이션 버튼이 위치하도록 설정 */}
+  <div className="mb-4">
     <div className="flex justify-center items-center">
       {Array.from({ length: totalPages }, (_, index) => index + 1).map(
         (pageNumber) => (
