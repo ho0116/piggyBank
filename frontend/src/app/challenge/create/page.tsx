@@ -13,11 +13,13 @@ import { useRouter } from "next/navigation";
 export default function ChallengePage() {
   const { user } = useAuth();
   const router = useRouter();
+
   useEffect(() => {
     if (!user) {
       router.push("/user/login");
     }
-  })
+  });
+
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [challengeName, setChallengeName] = useState<string>("");
