@@ -16,7 +16,7 @@ export default function Home() {
             starredChallenge ? (
               <>
                 <p className="mb-10 text-2xl">{starredChallenge.challengeName}</p>
-                <p className="text-xl">{starredChallenge.savedAmount} 원 저금 중...</p>
+                <p className="text-xl">{starredChallenge.savedAmount}원 저금 중...</p>
               </>
             ) :
             (<p className="text-xl">
@@ -28,7 +28,7 @@ export default function Home() {
       <div className="text-center">
         <Image src={logo} width={200} height={200} alt="logo" />
         {starredChallenge ? (
-          <p className="mt-10 text-3xl font-bold text-cyan-500">{starredChallenge?.savedAmount / starredChallenge?.targetAmount} %</p>
+          <p className="mt-10 text-4xl font-bold text-cyan-500">{starredChallenge?.savedAmount / starredChallenge?.targetAmount * 100} %</p>
           ) : (
             <button className="mt-12 bg-cyan-500 text-white w-full h-12 rounded-md font-semibold" onClick={()=>{router.push("/myPage/challengeList")}}>챌린지 보러가기</button>
           )

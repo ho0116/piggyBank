@@ -75,8 +75,9 @@ export default function Account(){
         deleteMutation.mutate(id);
     };
 
-    return(<div className="flex flex-col justify-center items-center">
-        <div className="w-11/12 h-[360px] bg-white overflow-y-scroll list-none mt-4 flex flex-col rounded-md p-3">
+    return(
+    <div className="flex flex-col justify-center items-center min-h-screen">
+        <div className="w-11/12 h-[360px] bg-white overflow-y-scroll list-none mt-4 flex flex-col rounded-md p-3 shadow-md shadow-violet-200/20">
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col">
                     <label>은행명</label>
@@ -97,7 +98,7 @@ export default function Account(){
                 <button className="bg-cyan-400 text-white w-full rounded-md h-10">등록</button>
             </form>
         </div>
-        <div className="w-11/12 h-[360px] bg-white overflow-y-scroll list-none mt-4 flex flex-col rounded-md p-3">
+        <div className="w-11/12 h-[360px] bg-white overflow-y-scroll list-none mt-4 flex flex-col rounded-md p-3 shadow-md shadow-violet-200/20">
         { accountList && 
             <ul>{accountList.map((a:MyAccount)=>(
                 <li key={a.id} className="border-b p-2">

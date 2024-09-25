@@ -28,17 +28,21 @@ export default function ChallengePage() {
   const [amount, setAmount] = useState<string>("");
   const [selectedAccount, setSelectedAccount] = useState<number | "">("");
 
-  const {data:accountList, isLoading, isError} = useQuery({
-    queryKey:["accountList"],
+  const {
+    data: accountList,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["accountList"],
     queryFn: () => getMyAccount(user?.id as number),
     enabled: !!user?.id,
     refetchOnMount: true,
-})
-console.log(accountList);
+  });
+  console.log(accountList);
   const challengeStatus: string = "In Progress";
- const savingCycle: number = 12;
+  const savingCycle: number = 12;
   const userId: number | undefined = user?.id;
-  const accountId : number = selectedAccount;
+  const accountId: number = selectedAccount;
   const savedAmount: number = 10000;
 
   const mutation = useMutation({
@@ -72,126 +76,128 @@ console.log(accountList);
     mutation.mutate(challenge);
   };
 
-
-
-
   const handleAccountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedAccount(Number(e.target.value));
   };
-
-
+  
   return (
-    <div className="max-w-lg mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">챌린지 만들기</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium">
-            이름
-          </label>
-          <input
-            id="name"
-            required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={challengeName}
-            onChange={(e) => setChallengeName(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="ment" className="block text-sm font-medium">
-            설명
-          </label>
-          <input
-            id="ment"
-            required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={challengeDescription}
-            onChange={(e) => setChallengeDescription(e.target.value)}
-          />
-        </div>
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="max-w-lg mx-auto p-6">
+        <h1 className="text-3xl font-bold mb-6 text-cyan-500">챌린지 만들기</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-sm font-medium">
+              이름
+            </label>
+            <input
+              id="name"
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={challengeName}
+              onChange={(e) => setChallengeName(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="ment" className="block text-sm font-medium">
+              설명
+            </label>
+            <input
+              id="ment"
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={challengeDescription}
+              onChange={(e) => setChallengeDescription(e.target.value)}
+            />
+          </div>
 
-        <div className="mb-4">
-          {/* 시작 날짜 선택 */}
-          <label htmlFor="start" className="block text-sm font-medium">
-            시작 날짜:{" "}
-          </label>
-          <DatePicker
-            dateFormat="yyyy.MM.dd"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            minDate={new Date()} // 과거 선택 불가
-            id="start"
-          />
+          <div className="mb-4">
+            {/* 시작 날짜 선택 */}
+            <label htmlFor="start" className="block text-sm font-medium">
+              시작 날짜:{" "}
+            </label>
+            <DatePicker
+              dateFormat="yyyy.MM.dd"
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              minDate={new Date()} // 과거 선택 불가
+              id="start"
+            />
 
-          <br />
+            <br />
 
-          {/* 종료 날짜 선택 */}
-          <label htmlFor="end" className="block text-sm font-medium">
-            종료 날짜:{" "}
-          </label>
-          <DatePicker
-            dateFormat="yyyy.MM.dd"
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            minDate={startDate ?? new Date()} // 시작 날짜 이후만 선택 가능
-            id="end"
-          />
-        </div>
+            {/* 종료 날짜 선택 */}
+            <label htmlFor="end" className="block text-sm font-medium">
+              종료 날짜:{" "}
+            </label>
+            <DatePicker
+              dateFormat="yyyy.MM.dd"
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              minDate={startDate ?? new Date()} // 시작 날짜 이후만 선택 가능
+              id="end"
+            />
+          </div>
 
-        <div className="mb-4">
-          <label htmlFor="amount" className="block text-sm font-medium">
-            목표 금액
-          </label>
-          <input
-            id="amount"
-            required
-            value={targetAmount}
-            onChange={(e) => setTargetAmount(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+          <div className="mb-4">
+            <label htmlFor="amount" className="block text-sm font-medium">
+              목표 금액
+            </label>
+            <input
+              id="amount"
+              required
+              value={targetAmount}
+              onChange={(e) => setTargetAmount(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
 
-        <div className="mb-4">
-          <label htmlFor="amount" className="block text-sm font-medium">
-            저축할 금액
-          </label>
-          <input
-            id="amount"
-            required
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
+          <div className="mb-4">
+            <label htmlFor="amount" className="block text-sm font-medium">
+              저축할 금액
+            </label>
+            <input
+              id="amount"
+              required
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
 
-        <div className="mb-4">
-          <label htmlFor="account" className="block text-sm font-medium">
-            계좌 선택
-          </label>
-          <select
-          id="account"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          value={selectedAccount}
-          onChange={handleAccountChange}
-        >
-          <option value="" disabled>
-            계좌를 선택해주세요
-          </option>
-          {accountList?.map((account: { id: number; accountNumber: string }) => (
-            <option key={account.id} value={account.id}>
-              {account.accountNumber}
-            </option>
-          ))}
-        </select>
-        </div>
+          <div className="mb-4">
+            <label htmlFor="account" className="block text-sm font-medium">
+              계좌 선택
+            </label>
+            <select
+              id="account"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={selectedAccount}
+              onChange={handleAccountChange}
+            >
+              <option value="" disabled>
+                계좌를 선택해주세요
+              </option>
+              {accountList?.map(
+                (account: { id: number; accountNumber: string }) => (
+                  <option key={account.id} value={account.id}>
+                    {account.accountNumber}
+                  </option>
+                )
+              )}
+            </select>
+          </div>
 
-        <button
-          type="submit"
-          className="mt-12 bg-cyan-500 text-white w-full h-12 rounded-md font-semibold"
-          onClick={()=>{router.push("/myPage")}}
-        >
-          챌린지 생성
-        </button>
-      </form>
+          <button
+            type="submit"
+            className="mt-4 bg-cyan-500 text-white w-full h-12 rounded-md font-semibold"
+            onClick={() => {
+              router.push("/myPage");
+            }}
+          >
+            챌린지 생성
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

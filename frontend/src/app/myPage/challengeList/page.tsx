@@ -69,12 +69,14 @@ export default function ChallengeList() {
   };
 
   // Star 설정 핸들러
-  const handleStar = (challenge: Challenge) => {
+  const handleStar = (e: React.MouseEvent, challenge: Challenge) => {
+    e.stopPropagation();
     setStarredChallenge(challenge); // 대표 챌린지 설정
   };
 
   // Star 해제 핸들러 (필요하지 않을 수도 있음)
-  const handleUnStar = () => {
+  const handleUnStar = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setStarredChallenge(null); // 대표 챌린지 해제
   };
 
@@ -104,7 +106,7 @@ export default function ChallengeList() {
                   <div className="flex justify-between items-center">
                     <p className="font-bold text-lg">{c.challengeName}</p>
                     {starredChallenge?.id === c.id ? (
-                      <button onClick={handleUnStar}>
+                      <button onClick={(e) => {handleUnStar(e)}}>
                         <Image
                           src={star_fill}
                           width={20}
@@ -113,7 +115,7 @@ export default function ChallengeList() {
                         />
                       </button>
                     ) : (
-                      <button onClick={() => handleStar(c)}>
+                      <button onClick={(e) => {handleStar(e, c)}}>
                         <Image
                           src={star_outline}
                           width={20}
