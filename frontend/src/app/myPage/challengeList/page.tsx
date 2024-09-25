@@ -10,16 +10,16 @@ import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect, useRef } from "react";
 import Challenge from "@/app/types/challengeType";
 import { useRouter } from "next/navigation";
+import { getMyAccount } from "@/app/api/accountApi";
 
 export default function ChallengeList() {
   const { user } = useAuth();
-
   const router = useRouter();
 
   const { starredChallenge, setStarredChallenge } = useStar(); // Star 상태 가져오기
   const {
     data: challengeList,
-    isLoading,
+    isLoading: isChallengeLoading,
     isError,
     error,
   } = useQuery({
@@ -27,6 +27,25 @@ export default function ChallengeList() {
     queryFn: () => getAllChallenges(user?.id as number),
     enabled: !!user?.id,
   });
+
+  const { data: accountList, isLoading: isAccountLoading } = useQuery({
+    queryKey: ["accountList"],
+    queryFn: () => getMyAccount(user?.id as number),
+    enabled: !!user?.id,
+  });
+
+  // 계좌 및 챌린지 상태에 따른 리디렉션
+  useEffect(() => {
+    if (!isAccountLoading && !isChallengeLoading) {
+      if (!accountList || accountList.length === 0) {
+        // 계좌가 없는 경우 계좌 생성 페이지로 리디렉션
+        router.push("/myPage/account");
+      } else if (!challengeList || challengeList.length === 0) {
+        // 계좌는 있지만 챌린지가 없는 경우 챌린지 생성 페이지로 리디렉션
+        router.push("/challenge/create");
+      }
+    }
+  }, [accountList, challengeList, isAccountLoading, isChallengeLoading, router]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(3);
@@ -88,7 +107,7 @@ export default function ChallengeList() {
       </p>
       {/* 챌린지 리스트 */}
       <div className="flex-grow mt-4">
-        {isLoading && <div>Loading...</div>}
+        {isChallengeLoading && <div>Loading...</div>}
         {isError && <div>{error?.message}</div>}
         {!isError && currentItems && (
           <ul className="list-none flex flex-col items-center space-y-6">

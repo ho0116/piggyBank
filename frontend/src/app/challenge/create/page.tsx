@@ -28,6 +28,7 @@ export default function ChallengePage() {
   const [amount, setAmount] = useState<string>("");
   const [selectedAccount, setSelectedAccount] = useState<number | "">("");
 
+  // 계좌 목록을 가져오는 useQuery
   const {
     data: accountList,
     isLoading,
@@ -38,7 +39,15 @@ export default function ChallengePage() {
     enabled: !!user?.id,
     refetchOnMount: true,
   });
-  console.log(accountList);
+
+  // 계좌 목록을 확인하고, 계좌가 없으면 계좌 생성 페이지로 이동
+  useEffect(() => {
+    if (!isLoading && accountList && accountList.length === 0) {
+      alert("계좌가 없습니다. 계좌를 먼저 생성해주세요.");
+      router.push("/myPage/account"); // 계좌 생성 페이지로 리디렉션
+    }
+  }, [accountList, isLoading, router]);
+
   const challengeStatus: string = "In Progress";
   const savingCycle: number = 12;
   const userId: number | undefined = user?.id;
@@ -79,7 +88,7 @@ export default function ChallengePage() {
   const handleAccountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedAccount(Number(e.target.value));
   };
-  
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-10/12 mx-auto p-6">
@@ -191,9 +200,6 @@ export default function ChallengePage() {
           <button
             type="submit"
             className="mt-4 bg-cyan-500 text-white w-full h-12 rounded-md font-semibold"
-            onClick={() => {
-              router.push("/myPage");
-            }}
           >
             챌린지 생성
           </button>
