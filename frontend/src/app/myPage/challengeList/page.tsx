@@ -13,7 +13,6 @@ import { useRouter } from "next/navigation";
 
 export default function ChallengeList() {
   const { user } = useAuth();
-  
   const router = useRouter();
 
   const { starredChallenge, setStarredChallenge } = useStar(); // Star 상태 가져오기
@@ -42,6 +41,12 @@ export default function ChallengeList() {
     }
     return 3; // 기본값
   };
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/user/login");
+    }
+  })
 
   useEffect(() => {
     const handleResize = () => {
