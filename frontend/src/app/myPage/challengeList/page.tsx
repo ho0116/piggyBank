@@ -8,6 +8,7 @@ import star_fill from "../../../image/star_fill.png";
 import star_outline from "../../../image/star_outline.png";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect, useRef } from "react";
+import Challenge from "@/app/types/challengeType";
 
 export default function ChallengeList() {
   const { user } = useAuth();
@@ -53,8 +54,8 @@ export default function ChallengeList() {
   };
 
   // Star 설정 핸들러
-  const handleStar = (challengeId: string) => {
-    setStarredChallenge(challengeId); // 대표 챌린지 설정
+  const handleStar = (challenge: Challenge) => {
+    setStarredChallenge(challenge); // 대표 챌린지 설정
   };
 
   // Star 해제 핸들러 (필요하지 않을 수도 있음)
@@ -81,7 +82,7 @@ export default function ChallengeList() {
                 <div>
                   <div className="flex justify-between items-center">
                     <p className="font-bold text-lg">{c.challengeName}</p>
-                    {starredChallenge === String(c.id) ? (
+                    {starredChallenge?.id === c.id? (
                       <button onClick={handleUnStar}>
                         <Image
                           src={star_fill}
@@ -91,7 +92,7 @@ export default function ChallengeList() {
                         />
                       </button>
                     ) : (
-                      <button onClick={() => handleStar(String(c.id))}>
+                      <button onClick={() => handleStar(c)}>
                         <Image
                           src={star_outline}
                           width={20}

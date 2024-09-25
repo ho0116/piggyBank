@@ -1,9 +1,9 @@
 "use client"
 
-import { createAccount, getMyAccount } from "@/app/api/accountApi";
+import { createAccount, deleteAccount, getMyAccount } from "@/app/api/accountApi";
 import useAuth from "@/app/hooks/useAuth";
 import MyAccount from "@/app/types/accountType";
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react"
 
@@ -35,13 +35,15 @@ export default function Account(){
         queryKey:["accountList"],
         queryFn: () => getMyAccount(user?.id as number),
         enabled: !!user?.id,
-        refetchOnMount: true,
     })
+
+    const queryClient = new QueryClient();
 
     const createMutate = useMutation({
         mutationFn:createAccount,
         onSuccess: () => {
-            alert("등록 성공!")
+            queryClient.invalidateQueries({ queryKey: ["accountList"] });
+            alert("등록 성공!");
         },
         onError: (error)=>{
             alert("등록 실패")
@@ -62,7 +64,16 @@ export default function Account(){
         }));
     };
 
+    const deleteMutation = useMutation({
+        mutationFn: deleteAccount,
+        onSuccess: ()=>{
+            alert('삭제 성공')
+        }
+    })
 
+    const handleDelete = (id: number) => {
+        deleteMutation.mutate(id);
+    };
 
     return(<div className="flex flex-col justify-center items-center">
         <div className="w-11/12 h-[360px] bg-white overflow-y-scroll list-none mt-4 flex flex-col rounded-md p-3">
@@ -95,6 +106,7 @@ export default function Account(){
                         <span className="">{a.accountNumber}   </span>
                         <span className="">{a.accountHolder}</span>
                         <p className="">{a.balance}원</p>
+                        <button className="bg-red-500 text-white rounded-md px-1 text-sm" onClick={() => a.id && handleDelete(a.id)}>삭제</button>
                     </div>
                 </li>))}
             </ul>

@@ -1,11 +1,14 @@
 "use client"
+
 import Link from "next/link";
 import useAuth from "../hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { useStar } from "@/context/StarContext";
 
 export default function MyPage() {
   const { user, removeUser } = useAuth();
-  console.log(user)
+  const { setStarredChallenge} = useStar();
+
   const router = useRouter();
   return (
     <div className=" flex flex-col justify-center items-center min-h-screen ">
@@ -13,6 +16,7 @@ export default function MyPage() {
         <button
           onClick={() => {
             removeUser();
+            setStarredChallenge(null);
             router.push("/user/login");
           }}
         >
