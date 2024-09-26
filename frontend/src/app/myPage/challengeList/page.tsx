@@ -8,9 +8,7 @@ import star_fill from "../../../image/star_fill.png";
 import star_outline from "../../../image/star_outline.png";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect, useRef } from "react";
-import Challenge from "@/app/types/challengeType";
 import { useRouter } from "next/navigation";
-import { getMyAccount } from "@/app/api/accountApi";
 
 export default function ChallengeList() {
   const { user } = useAuth();
@@ -19,7 +17,7 @@ export default function ChallengeList() {
   const { starredChallenge, setStarredChallenge } = useStar(); // Star 상태 가져오기
   const {
     data: challengeList,
-    isLoading: isChallengeLoading,
+    isLoading,
     isError,
     error,
   } = useQuery({
@@ -27,22 +25,6 @@ export default function ChallengeList() {
     queryFn: () => getAllChallenges(user?.id as number),
     enabled: !!user?.id,
   });
-
-  const { data: accountList, isLoading: isAccountLoading } = useQuery({
-    queryKey: ["accountList"],
-    queryFn: () => getMyAccount(user?.id as number),
-    enabled: !!user?.id,
-  });
-
-  // 계좌 및 챌린지 상태에 따른 리디렉션
-  // useEffect(() => {
-  //   if (!isAccountLoading && !isChallengeLoading) {
-  //     if (!accountList || accountList.length === 0) {
-  //       // 계좌가 없는 경우 계좌 생성 페이지로 리디렉션
-  //       router.push("/myPage/account");
-  //     } 
-  //   }
-  // }, [accountList, challengeList, isAccountLoading, isChallengeLoading, router]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(3);
@@ -104,8 +86,8 @@ export default function ChallengeList() {
       </p>
       {/* 챌린지 리스트 */}
       <div className="flex-grow mt-4">
-        {currentItems.length == 0 && <p className="text-center justify-center text-gray-600 text-sm">리스트를 만들어보세요.</p>}
-        {isChallengeLoading && <div>Loading...</div>}
+        {currentItems?.length == 0 && <p className="text-center justify-center text-gray-600 text-sm">리스트를 만들어보세요.</p>}
+        {isLoading && <div>Loading...</div>}
         {isError && <div>{error?.message}</div>}
         {!isError && currentItems && (
           <ul className="list-none flex flex-col items-center space-y-6">

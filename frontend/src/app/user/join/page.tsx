@@ -49,20 +49,6 @@ export default function JoinForm() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium">
-              비밀번호
-            </label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              value={users.password}
-              onChange={(e) => setUsers({ ...users, password: e.target.value })}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium">
               이메일
             </label>
@@ -72,6 +58,20 @@ export default function JoinForm() {
               name="email"
               value={users.email}
               onChange={(e) => setUsers({ ...users, email: e.target.value })}
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="password" className="block text-sm font-medium">
+              비밀번호
+            </label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              value={users.password}
+              onChange={(e) => setUsers({ ...users, password: e.target.value })}
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />

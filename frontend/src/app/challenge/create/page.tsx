@@ -41,12 +41,26 @@ export default function ChallengePage() {
   });
 
   // 계좌 목록을 확인하고, 계좌가 없으면 계좌 생성 페이지로 이동
+  const [alertShown, setAlertShown] = useState(false);
+
   useEffect(() => {
-    if (!isLoading && accountList && accountList.length === 0) {
-      alert("계좌가 없습니다. 계좌를 먼저 생성해주세요.");
-      router.push("/myPage/account"); // 계좌 생성 페이지로 리디렉션
+    if (
+      !isLoading &&
+      accountList &&
+      accountList.length === 0 &&
+      !alertShown
+    ) {
+      // useEffect 안에서 alert을 실행하지 않고, 상태 플래그만 관리
+      setAlertShown(true);
     }
-  }, [accountList, isLoading, router]);
+  }, [accountList, isLoading, router, alertShown]);
+  
+  useEffect(() => {
+    if (alertShown && accountList && accountList.length === 0) {
+      window.alert("계좌가 없습니다. 계좌를 먼저 생성해주세요.");
+      router.push("/myPage/account");
+    }
+  }, [alertShown, accountList, router]);
 
   const challengeStatus: string = "In Progress";
   const savingCycle: number = 12;
@@ -92,10 +106,15 @@ export default function ChallengePage() {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-10/12 mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-12 text-cyan-500 text-center">챌린지 만들기</h1>
+        <h1 className="text-3xl mb-4 font-bold text-cyan-500 text-center">
+          챌린지 만들기
+        </h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 text-sm font-medium">
+            <label
+              htmlFor="name"
+              className="block text-gray-700 text-sm font-medium"
+            >
               챌린지명
             </label>
             <input
@@ -107,7 +126,10 @@ export default function ChallengePage() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="ment" className="block text-gray-700 text-sm font-medium">
+            <label
+              htmlFor="ment"
+              className="block text-gray-700 text-sm font-medium"
+            >
               설명
             </label>
             <input
@@ -121,7 +143,10 @@ export default function ChallengePage() {
 
           <div className="mb-4">
             {/* 시작 날짜 선택 */}
-            <label htmlFor="start" className="block text-gray-700 text-sm font-medium">
+            <label
+              htmlFor="start"
+              className="block text-gray-700 text-sm font-medium"
+            >
               시작 날짜:{" "}
             </label>
             <DatePicker
@@ -136,7 +161,10 @@ export default function ChallengePage() {
             <br />
 
             {/* 종료 날짜 선택 */}
-            <label htmlFor="end" className="block text-gray-700 text-sm font-medium">
+            <label
+              htmlFor="end"
+              className="block text-gray-700 text-sm font-medium"
+            >
               종료 날짜:{" "}
             </label>
             <DatePicker
@@ -149,7 +177,10 @@ export default function ChallengePage() {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="amount" className="block text-gray-700 text-sm font-medium">
+            <label
+              htmlFor="amount"
+              className="block text-gray-700 text-sm font-medium"
+            >
               목표 금액
             </label>
             <input
@@ -162,7 +193,10 @@ export default function ChallengePage() {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="amount" className="block text-gray-700 text-sm font-medium">
+            <label
+              htmlFor="amount"
+              className="block text-gray-700 text-sm font-medium"
+            >
               저축할 금액
             </label>
             <input
@@ -175,7 +209,10 @@ export default function ChallengePage() {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="account" className="block text-gray-700 text-sm font-medium">
+            <label
+              htmlFor="account"
+              className="block text-gray-700 text-sm font-medium"
+            >
               계좌 선택
             </label>
             <select
@@ -199,7 +236,7 @@ export default function ChallengePage() {
 
           <button
             type="submit"
-            className="mt-4 bg-cyan-500 text-white w-full h-12 rounded-md font-semibold"
+            className="mt-4 mb-4 bg-cyan-500 text-white w-full h-12 rounded-md font-semibold"
           >
             챌린지 생성
           </button>
